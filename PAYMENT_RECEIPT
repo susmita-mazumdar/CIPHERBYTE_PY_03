@@ -1,0 +1,56 @@
+NAME: SUSMITA MAZUMDAR
+BATCH: OCTOBER
+DOMAIN: PYTHON PROGRAMMING
+=================================================================================================================
+
+
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+
+# Function to generate a payment receipt
+def create_payment_receipt(output_filename, receipt_data):
+    doc = SimpleDocTemplate(output_filename, pagesize=letter)
+
+    # Define a list to store elements for the PDF
+    elements = []
+
+    # Create a custom stylesheet
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(name='Justify', alignment=TA_JUSTIFY))
+
+    # Title
+    title = "PAYMENT RECEIPT"
+    title_style = styles["Title"]
+    elements.append(Paragraph(title, title_style))
+    elements.append(Spacer(1, 12))
+
+    # Receipt data
+    receipt_style = styles["Normal"]
+    for line in receipt_data:
+        elements.append(Paragraph(line, receipt_style))
+        elements.append(Spacer(1, 12))
+
+    # Create the PDF document
+    doc.build(elements)
+
+if __name__ == '__main__':
+    # Receipt data
+    receipt_data = [
+        "Date: October 18, 2023",
+        "Receipt Number: 123456",
+        "Received from: John Doe",
+        "Amount: $100.00",
+        "Payment Method: Credit Card",
+        "Thank you for your payment!",
+    ]
+
+    # Output PDF filename
+    output_filename = "payment_receipt.pdf"
+
+    # Generate the payment receipt
+    create_payment_receipt(output_filename, receipt_data)
+
+    print(f"Payment receipt saved as '{output_filename}'")
